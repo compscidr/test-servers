@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        slf4j_version = '1.7.25'
+        slf4j_version = '1.7.36'
     }
 }
 
