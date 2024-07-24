@@ -1,6 +1,5 @@
 import UDPServer.ServerConstants.UDP_DEFAULT_PORT
 import org.slf4j.LoggerFactory
-import org.springframework.boot.autoconfigure.SpringBootApplication
 import sun.misc.Signal
 import java.net.DatagramPacket
 import java.net.DatagramSocket
@@ -9,7 +8,6 @@ import java.net.InetAddress
 /**
  * A simple UDP echo server which can be used for testing.
  */
-@SpringBootApplication
 open class UDPServer {
     object ServerConstants {
         const val UDP_DEFAULT_PORT = 8899

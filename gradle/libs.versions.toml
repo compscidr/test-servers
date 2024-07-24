@@ -1,0 +1,11 @@
+[versions]
+kotlin = "2.0.0"
+slf4j = "2.0.13"
+logback-classic = "1.5.6"
+
+[libraries]
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-classic" }
+
+[plugins]
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
