@@ -1,26 +1,28 @@
+import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    id "application"
+    id("application")
 }
 
 dependencies {
     api(libs.slf4j.api)
     implementation(libs.logback.classic)
-    testImplementation "org.jetbrains.kotlin:kotlin-test"
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
-test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = '17'
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = '17'
+tasks.withType<KotlinCompile>().configureEach() {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 application {
-    mainClassName = 'UDPServer'
+    mainClass.set("UDPServer")
 }
