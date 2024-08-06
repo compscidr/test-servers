@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.0"
+kotlin = "2.0.10"
 slf4j = "2.0.13"
 logback-classic = "1.5.6"
 
