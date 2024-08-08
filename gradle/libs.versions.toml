@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.10"
-slf4j = "2.0.14"
+slf4j = "2.0.15"
 logback-classic = "1.5.6"
 
 [libraries]
