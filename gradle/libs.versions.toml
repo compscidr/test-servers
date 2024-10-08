@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.0.20"
 slf4j = "2.0.16"
-logback-classic = "1.5.8"
+logback-classic = "1.5.9"
 
 [libraries]
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
