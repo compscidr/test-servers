@@ -26,8 +26,8 @@ import kotlin.jvm.javaClass
 @Suppress("NewApi") // this isn't intended to run on Android anyway, so it doesn't matter
 open class TcpEchoServer {
     private val logger = LoggerFactory.getLogger(javaClass)
-    private lateinit var listenerThread: Thread
-    private lateinit var serverSocket: ServerSocket
+    protected lateinit var listenerThread: Thread
+    protected lateinit var serverSocket: ServerSocket
     protected val executor = Executors.newFixedThreadPool(THREADS)
     protected val sessionMap = ConcurrentHashMap<Socket, Socket>()
 

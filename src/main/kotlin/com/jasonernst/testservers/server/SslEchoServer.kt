@@ -1,6 +1,8 @@
 package com.jasonernst.testservers.server
 import org.slf4j.LoggerFactory
 import sun.misc.Signal
+import java.io.IOException
+import java.nio.channels.AsynchronousCloseException
 import java.security.KeyStore
 import java.security.SecureRandom
 import javax.net.ssl.KeyManagerFactory
@@ -25,8 +27,6 @@ class SslEchoServer(
     private val keyStorePassword: String = "abc123",
 ) : TcpEchoServer() {
     private val logger = LoggerFactory.getLogger(javaClass)
-    private lateinit var serverSocket: SSLServerSocket
-    private lateinit var listenerThread: Thread
 
     companion object {
         private val staticLogger = LoggerFactory.getLogger(javaClass)
@@ -49,8 +49,8 @@ class SslEchoServer(
 
     override fun start() {
         if (running) {
-            logger.error("TCP server is already running")
-            throw IllegalStateException("TCP server is already running")
+            logger.error("SSL server is already running")
+            throw IllegalStateException("SSL server is already running")
         }
         running = true
 
@@ -73,8 +73,8 @@ class SslEchoServer(
         val factory = ctx.serverSocketFactory
         try {
             serverSocket = factory.createServerSocket(port) as SSLServerSocket
-            serverSocket.needClientAuth = true
-            serverSocket.enabledProtocols = arrayOf(tlsVersion)
+            (serverSocket as SSLServerSocket).needClientAuth = true
+            (serverSocket as SSLServerSocket).enabledProtocols = arrayOf(tlsVersion)
 
             logger.debug("SSL server listening on port: $port")
 
@@ -89,8 +89,14 @@ class SslEchoServer(
                                     clientSocket,
                                 )
                             }
-                        } catch (e: Exception) {
-                            logger.debug("SSL server: error accepting connection: ${e.message}", e)
+                        } catch (e: AsynchronousCloseException) {
+                            logger.debug(
+                                "$javaClass: AsynchronousCloseException, probably shutting " +
+                                    "down: $e",
+                            )
+                            break
+                        } catch (e: IOException) {
+                            logger.error("$javaClass: IOException: $e")
                         }
                     }
                 }, "SSL-Server-Listener")
