@@ -52,7 +52,7 @@ tasks.withType<KotlinCompile>().configureEach {
 mavenPublishing {
     coordinates("com.jasonernst.test-servers", "test-servers", version.toString())
     pom {
-        name = "knet"
+        name = "test-servers"
         description = "A collection of test servers writte in Kotlin to run protocol tests against"
         inceptionYear = "2024"
         url = "https://github.com/compscidr/test-servers"
