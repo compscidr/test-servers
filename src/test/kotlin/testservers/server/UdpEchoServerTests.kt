@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Timeout
 import org.junit.jupiter.api.assertThrows
 
 @Timeout(20)
-class UDPEchoServerTests {
+class UdpEchoServerTests {
     @Test fun startStopTest() {
         val udpEchoServer = UdpEchoServer()
         udpEchoServer.start()
