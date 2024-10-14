@@ -48,6 +48,26 @@ tasks.withType<KotlinCompile>().configureEach {
     }
 }
 
+version = "0.0.0-SNAPSHOT"
+gitVersioning.apply {
+    refs {
+        branch(".+") { version = "\${ref}-SNAPSHOT" }
+        tag("v(?<version>.*)") { version = "\${ref.version}" }
+    }
+}
+
+// see: https://github.com/vanniktech/gradle-maven-publish-plugin/issues/747#issuecomment-2066762725
+// and: https://github.com/GradleUp/nmcp
+nmcp {
+    val props = project.properties
+    publishAllPublications {
+        username = props["centralPortalToken"] as String? ?: ""
+        password = props["centralPortalPassword"] as String? ?: ""
+        // or if you want to publish automatically
+        publicationType = "AUTOMATIC"
+    }
+}
+
 // see: https://vanniktech.github.io/gradle-maven-publish-plugin/central/#configuring-the-pom
 mavenPublishing {
     coordinates("com.jasonernst.test-servers", "test-servers", version.toString())
