@@ -38,7 +38,7 @@ open class TcpEchoServer {
     private var shutDownAfterAccept = false
 
     @Volatile
-    private var running: Boolean = false
+    protected var running: Boolean = false
 
     companion object {
         private val staticLogger = LoggerFactory.getLogger(javaClass)
