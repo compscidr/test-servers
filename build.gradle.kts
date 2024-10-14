@@ -47,3 +47,35 @@ tasks.withType<KotlinCompile>().configureEach {
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
+
+// see: https://vanniktech.github.io/gradle-maven-publish-plugin/central/#configuring-the-pom
+mavenPublishing {
+    coordinates("com.jasonernst.test-servers", "test-servers", version.toString())
+    pom {
+        name = "knet"
+        description = "A collection of test servers writte in Kotlin to run protocol tests against"
+        inceptionYear = "2024"
+        url = "https://github.com/compscidr/test-servers"
+        licenses {
+            license {
+                name = "GPL-3.0"
+                url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+                distribution = "repo"
+            }
+        }
+        developers {
+            developer {
+                id = "compscidr"
+                name = "Jason Ernst"
+                url = "https://www.jasonernst.com"
+            }
+        }
+        scm {
+            url = "https://github.com/compscidr/test-servers"
+            connection = "scm:git:git://github.com/test-servers.git"
+            developerConnection = "scm:git:ssh://git@github.com/compscidr/test-servers.git"
+        }
+    }
+
+    signAllPublications()
+}

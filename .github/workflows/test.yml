@@ -1,31 +1,51 @@
-name: Push
+name: JVM Tests
 
 on:
   push:
-    branches: [ "develop", "main" ]
+    branches:
+      - main
   pull_request:
     types: [ opened, synchronize ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+  jvm-tests:
+
+    runs-on: "ubuntu-latest"
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job is running on a ${{ runner.os }} server hosted by GitHub!"
       - uses: actions/checkout@v4
-      - run: echo "The ${{ github.repository }} repository has been cloned."
-      - run: echo "Setting up JDK"
-      - name: set up JDK
+
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - run: echo "The workflow is now ready to test your code."
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - run: echo "Building Debug APK."
-      - name: Build with Gradle
-        run: ./gradlew build
-      - run: echo "Build status report=${{ job.status }}."
+          java-version: 17
+          distribution: temurin
+
+      # outputs the host name of the runner to help debug if there are multiple runners with same
+      # prefix
+      - name: Debug Hostname and IP
+        run: |
+          echo "Runner host: $HOST_NAME"
+          curl https://api.ipify.org
+
+      - name: Lint
+        run: ./gradlew lintKotlin
+
+      - name: Build
+        run: ./gradlew compileJava compileKotlin compileTestJava compileTestKotlin
+
+      - name: Assemble
+        run: ./gradlew assemble
+
+      - name: Lib tests
+        run: ./gradlew test -DexcludeTags="Nightly"
+        timeout-minutes: 10
+
+      - name: Upload reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
