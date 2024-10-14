@@ -12,6 +12,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "udp-echo"
-
+rootProject.name = "test-servers"
