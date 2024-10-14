@@ -10,7 +10,10 @@ import kotlin.jvm.javaClass
 import kotlin.ranges.until
 import kotlin.text.toByteArray
 
-class UdpEchoClient(host: String = "127.0.0.1", port: Int = UDP_DEFAULT_PORT) {
+class UdpEchoClient(
+    host: String = "127.0.0.1",
+    port: Int = UDP_DEFAULT_PORT,
+) {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val socket = DatagramSocket()
 

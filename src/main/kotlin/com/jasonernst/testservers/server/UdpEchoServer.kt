@@ -19,6 +19,7 @@ class UdpEchoServer {
     private val buffer: ByteArray = ByteArray(DEFAULT_BUFFER_SIZE)
     private val packet: DatagramPacket = DatagramPacket(buffer, buffer.size)
     private lateinit var listenerThread: Thread
+
     @Volatile private var running: Boolean = false
 
     companion object {
@@ -31,9 +32,9 @@ class UdpEchoServer {
             val server = UdpEchoServer()
             server.start()
             Signal.handle(
-                Signal("INT")
-            )  // SIGINT
-            { server.stop() }
+                Signal("INT"),
+            ) // SIGINT
+                { server.stop() }
             while (server.running) {
                 staticLogger.debug("Waiting for server to stop running")
                 Thread.sleep(100)
