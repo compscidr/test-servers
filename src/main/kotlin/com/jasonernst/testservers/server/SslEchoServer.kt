@@ -91,12 +91,12 @@ class SslEchoServer(
                             }
                         } catch (e: AsynchronousCloseException) {
                             logger.debug(
-                                "$javaClass: AsynchronousCloseException, probably shutting " +
+                                "${javaClass.simpleName}: AsynchronousCloseException, probably shutting " +
                                     "down: $e",
                             )
                             break
                         } catch (e: IOException) {
-                            logger.error("$javaClass: IOException: $e")
+                            logger.error("${javaClass.simpleName}: IOException: $e")
                         }
                     }
                 }, "SSL-Server-Listener")

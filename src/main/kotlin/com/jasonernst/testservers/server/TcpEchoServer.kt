@@ -87,13 +87,13 @@ open class TcpEchoServer {
      */
     open fun start() {
         if (running) {
-            logger.error("$javaClass is already running")
+            logger.error("${javaClass.simpleName} is already running")
             throw IllegalStateException("TCP server is already running")
         }
         serverSocket = ServerSocket()
         running = true
 
-        logger.debug("$javaClass: Starting server version TODO")
+        logger.debug("${javaClass.simpleName}: Starting server version TODO")
         serverSocket.bind(InetSocketAddress(TCP_DEFAULT_PORT))
         // the line below gives a warning, but this isn't running on Android so it's fine
         serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true)
@@ -102,23 +102,23 @@ open class TcpEchoServer {
             Thread({
                 while (running) {
                     logger.debug(
-                        "$javaClass: waiting for connection on port: $TCP_DEFAULT_PORT " +
+                        "${javaClass.simpleName}: waiting for connection on port: $TCP_DEFAULT_PORT " +
                             "shutDownAfterAccept?: $shutDownAfterAccept " +
                             "shutdownAfterReply? $shutDownAfterReply",
                     )
                     try {
                         val clientSocket = serverSocket.accept()
                         if (clientSocket == null) {
-                            logger.debug("$javaClass: null client socket on accept")
+                            logger.debug("${javaClass.simpleName}: null client socket on accept")
                         } else {
                             logger.debug(
-                                "$javaClass: Got connection from" +
+                                "${javaClass.simpleName}: Got connection from" +
                                     " ${clientSocket.remoteSocketAddress}. Serving " +
                                     "${connectedClients()} clients",
                             )
 
                             if (shutDownAfterAccept) {
-                                logger.debug("$javaClass: shutting down after accept")
+                                logger.debug("${javaClass.simpleName}: shutting down after accept")
                                 try {
                                     clientSocket.close()
                                 } catch (e: Exception) {
@@ -131,12 +131,12 @@ open class TcpEchoServer {
                         }
                     } catch (e: AsynchronousCloseException) {
                         logger.debug(
-                            "$javaClass: AsynchronousCloseException, probably shutting " +
+                            "${javaClass.simpleName}: AsynchronousCloseException, probably shutting " +
                                 "down: $e",
                         )
                         break
                     } catch (e: IOException) {
-                        logger.error("$javaClass: IOException: $e")
+                        logger.error("${javaClass.simpleName}: IOException: $e")
                     }
                 }
                 logger.debug("TCP server stopped")
@@ -165,11 +165,11 @@ open class TcpEchoServer {
                     buffer.rewind()
                     buffer.limit(bytesRead)
                     logger.debug(
-                        "${javaClass.simpleName}: Read $bytesRead bytes on $javaClass " +
+                        "${javaClass.simpleName}: Read $bytesRead bytes on ${javaClass.simpleName} " +
                             "from: $remoteAddress",
                     )
 //                    logger.debug(
-//                        "$javaClass: Payload: ${String(
+//                        "${javaClass.simpleName}: Payload: ${String(
 //                            buffer.array(),
 //                            0,
 //                            bytesRead,
@@ -178,13 +178,13 @@ open class TcpEchoServer {
                     clientSocket.getOutputStream().write(buffer.array(), 0, bytesRead)
                     clientSocket.getOutputStream().flush()
                     logger.debug(
-                        "${javaClass.simpleName}: Wrote $bytesRead bytes from $javaClass " +
+                        "${javaClass.simpleName}: Wrote $bytesRead bytes from ${javaClass.simpleName} " +
                             "to: $remoteAddress",
                     )
                     buffer.clear()
                     if (shutDownAfterReply) {
                         logger.debug(
-                            "$javaClass: shutting down connection after reply " +
+                            "${javaClass.simpleName}: shutting down connection after reply " +
                                 "to: $remoteAddress",
                         )
                         clientSocket.close()
