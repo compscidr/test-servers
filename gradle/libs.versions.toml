@@ -1,5 +1,4 @@
 [versions]
-jupiter = "5.11.4"
 kotlin = "2.1.10"
 kotlinter = "5.0.1"
 slf4j = "2.0.16"
@@ -9,12 +8,15 @@ mockk = "1.13.16"
 [libraries]
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-classic" }
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+junit-bom = { module = "org.junit:junit-bom", version="5.12.0" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-jupiter-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [bundles]
 test = ["junit-jupiter-api", "mockk"]
+test-runtime = ["junit-jupiter-engine", "junit-jupiter-platform-launcher"]
 
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
