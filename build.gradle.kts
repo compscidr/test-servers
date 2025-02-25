@@ -13,8 +13,9 @@ plugins {
 
 dependencies {
     api(libs.slf4j.api)
+    testImplementation(platform(libs.junit.bom))
     testImplementation(libs.bundles.test)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.bundles.test.runtime)
     implementation(libs.logback.classic)
 }
 
