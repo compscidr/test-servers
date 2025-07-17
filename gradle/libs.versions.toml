@@ -3,7 +3,7 @@ kotlin = "2.2.0"
 kotlinter = "5.1.1"
 slf4j = "2.0.17"
 logback-classic = "1.5.18"
-mockk = "1.14.4"
+mockk = "1.14.5"
 
 [libraries]
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
