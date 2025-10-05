@@ -18,7 +18,7 @@ import kotlin.text.toByteArray
 import kotlin.text.toCharArray
 
 class SslEchoClient(
-    host: String = "echo.bumpapp.xyz",
+    host: String = "localhost",
     port: Int = SSL_DEFAULT_PORT,
     tlsVersion: String = "TLSv1.3",
     trustStoreName: String = "servercert.p12",
