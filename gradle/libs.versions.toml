@@ -2,7 +2,7 @@
 kotlin = "2.3.0"
 kotlinter = "5.4.0"
 slf4j = "2.0.17"
-logback-classic = "1.5.26"
+logback-classic = "1.5.27"
 mockk = "1.14.9"
 
 [libraries]
